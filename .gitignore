@@ -1,0 +1,37 @@
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local runtime data
+datasets/
+models/
+training_logs/
+logs/
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# Large model/checkpoint artifacts
+*.pt
+*.pth
+*.onnx
+*.safetensors
+
+# Local config and secrets
+.env
+.env.*
+*.key
+*.pem
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

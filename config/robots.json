@@ -1,0 +1,116 @@
+{
+  "schema_version": "botversex.robot-manifest.v0",
+  "robots": [
+    {
+      "runtime_id": "so101",
+      "robot_type": "so101",
+      "display_name": "SO-101 (Feetech STS3215 x 6)",
+      "transport": {
+        "kind": "leader_follower_serial",
+        "ports": {
+          "leader": "/dev/ttyACM0",
+          "follower": "/dev/ttyACM1"
+        }
+      },
+      "service": {
+        "kind": "none"
+      },
+      "urdf_url": "/api/urdf/so101.urdf",
+      "joint_names": ["1", "2", "3", "4", "5", "6"],
+      "capabilities": {
+        "state_stream": true,
+        "teleop": true,
+        "recording": true,
+        "calibration": true,
+        "motor_mode": false,
+        "local_moves": false,
+        "camera": true
+      },
+      "dependencies": {
+        "python_modules": ["lerobot", "lerobot.motors.feetech", "serial"],
+        "binaries": ["lerobot-teleoperate"],
+        "policy": "workspace_venv"
+      },
+      "ui": {
+        "route": "/robots/so101",
+        "onboarding_steps": [
+          "check_camera",
+          "connect_robot_arm",
+          "teleop_test",
+          "record_dataset",
+          "train_model",
+          "run_inference"
+        ]
+      }
+    },
+    {
+      "runtime_id": "reachy_mini",
+      "robot_type": "reachy_mini",
+      "display_name": "Reachy Mini (Pollen Robotics, 9 DoF)",
+      "transport": {
+        "kind": "usb_serial",
+        "ports": {
+          "serial": "/dev/ttyACM0"
+        }
+      },
+      "service": {
+        "kind": "local_daemon",
+        "host": "127.0.0.1",
+        "port": 8010,
+        "sdk_path": "/home/ethan/软件/botverseX material/reachy_mini_Allan",
+        "python_env": "adapter_venv",
+        "log_file": "/tmp/botversex_reachy_mini_daemon.log",
+        "command": [
+          "python",
+          "-m",
+          "reachy_mini.daemon.app.main",
+          "--serialport",
+          "{serial}",
+          "--fastapi-host",
+          "{host}",
+          "--fastapi-port",
+          "{port}",
+          "--no-preload-datasets",
+          "--autostart",
+          "--deactivate-audio"
+        ]
+      },
+      "urdf_url": "/api/urdf/reachy_mini/reachy_mini.urdf",
+      "joint_names": [
+        "body_rotation",
+        "stewart_1",
+        "stewart_2",
+        "stewart_3",
+        "stewart_4",
+        "stewart_5",
+        "stewart_6",
+        "right_antenna",
+        "left_antenna"
+      ],
+      "capabilities": {
+        "state_stream": true,
+        "teleop": false,
+        "recording": false,
+        "calibration": false,
+        "motor_mode": true,
+        "local_moves": true,
+        "camera": false
+      },
+      "dependencies": {
+        "python_modules": ["reachy_mini", "zenoh", "httpx", "websockets", "serial"],
+        "binaries": [],
+        "policy": "adapter_venv",
+        "install_hint": "Create an adapter venv for reachy_mini and install Allan's SDK with pip install -e ."
+      },
+      "ui": {
+        "route": "/robots/reachy_mini",
+        "onboarding_steps": [
+          "connect_device",
+          "start_service",
+          "test_state_stream",
+          "run_moves"
+        ]
+      }
+    }
+  ]
+}
