@@ -35,3 +35,6 @@ logs/
 Thumbs.db
 .vscode/
 .idea/
+
+# Auto-generated SSL certificates (per-machine)
+certs/
